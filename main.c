@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include "prints.h"
 
+//Kind of like lsblk on linux but for openBSD an without the feilds that
+//no one cares about
 int main(int argc, char *argv[]) {
 	if (geteuid()) {
 		fprintf(stderr, "Permssion denied\n");
