@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "prints.h"
-#include "disk.h"
 
 int main(int argc, char *argv[]) {
 
