@@ -33,10 +33,10 @@ void print_partition(struct disklabel *dp, unsigned char i, struct statfs *mntbu
 		struct size_unit su = convert_size(size);
 		char *mntp = get_mount_point(dp, mntbuf, mntsize);
 		if (!mntp) {
-			printf ("|-%s%c\t\t%.1f%c\n", dname, part_letter, 
+			printf ("|-%s%c\t\t%.1f%c\n", dname, part_letter,
 					su.size, su.unit);
 		} else {
-			printf ("|-%s%c\t\t%.1f%c\t\t%s\n", dname, part_letter, 
+			printf ("|-%s%c\t\t%.1f%c\t\t%s\n", dname, part_letter,
 					su.size, su.unit, mntp);
 		}
 	}
@@ -58,3 +58,4 @@ void print_disk(struct statfs *mntbuf, size_t mntsize, uint8_t diskn) {
 			print_partition(&dl, i, mntbuf, mntsize, dname);
 		}
 		free (dname);
+}
