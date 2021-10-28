@@ -58,4 +58,3 @@ void print_disk(struct statfs *mntbuf, size_t mntsize, uint8_t diskn) {
 			print_partition(&dl, i, mntbuf, mntsize, dname);
 		}
 		free (dname);
-}
