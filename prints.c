@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "prints.h"
 #include "disk.h"
-const char *table_head = "NAME\t\tSIZE\t\tMOUNTPOINT";
+const char *table_head = "NAME\t\tSIZE\t\tTYPE\t\tMOUNTPOINT";
 
 /*It's ok here to not return a pointer because sizeof(struct size_unit) is small */
 struct size_unit convert_size (size_t size) {
@@ -24,7 +24,6 @@ struct size_unit convert_size (size_t size) {
 
 
 void print_partition(struct disklabel *dp, unsigned char i, struct statfs *mntbuf, long mntsize, char *dname) {
-
 	unsigned char part_letter = 'a' + i;
 	unsigned long size = DL_GETPSIZE(&dp->d_partitions[i]);
 	if (size && part_letter != 'c') {
@@ -33,11 +32,11 @@ void print_partition(struct disklabel *dp, unsigned char i, struct statfs *mntbu
 		struct size_unit su = convert_size(size);
 		char *mntp = get_mount_point(dp, mntbuf, mntsize);
 		if (!mntp) {
-			printf ("|-%s%c\t\t%.1f%c\n", dname, part_letter,
+			printf ("|-%s%c\t\t%.1f%c\t\tpart\n", dname, part_letter,
 					su.size, su.unit);
 		} else {
-			printf ("|-%s%c\t\t%.1f%c\t\t%s\n", dname, part_letter,
-					su.size, su.unit, mntp);
+			printf ("|-%s%c\t\t%.1f%c\t\tpart\t\t%s\n", dname,
+					part_letter, su.size, su.unit, mntp);
 		}
 	}
 }
@@ -53,7 +52,7 @@ void print_disk(struct statfs *mntbuf, size_t mntsize, uint8_t diskn) {
 			return;
 		}
 		struct size_unit su = convert_size(DL_GETDSIZE (&dl));
-		printf ("%s\t\t%.1f%c\n", dname, su.size, su.unit);
+		printf ("%s\t\t%.1f%c\t\tdisk\n", dname, su.size, su.unit);
 		for (unsigned char i = 0; i < dl.d_npartitions; ++i) {
 			print_partition(&dl, i, mntbuf, mntsize, dname);
 		}
