@@ -1,32 +1,38 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
+#include <ctype.h>
 #include "prints.h"
 
 int main(int argc, char *argv[]) {
-
-	puts(table_head);
 	if (geteuid()) {
 		fprintf(stderr, "Permssion denied\n");
 		return -1;
 	}
+	puts(table_head);
 	long mntsize;
 	struct statfs *mntbuf;
 	mntsize = getmntinfo(&mntbuf, MNT_NOWAIT);
-	for (int i = 0; i <= 9; i++) {
-		struct disklabel dl;
-		char *dname;
-		int ret = get_disk_info (i, &dl, &dname);
-		if (ret == -1) {
-			continue;
-		} else if (ret == -2) {
-			fprintf(stderr, "Something went worng\n");
-			return -2;
+	if (argc >= 2) {
+		for (int i = 1; i < argc; ++i) {
+			if (!strncmp(argv[i], "sd", 2)) {
+				const char *errstr;
+				//Is it safe to do this conversion?
+				u_int8_t dn = strtonum(argv[i]+2, 0, 9, &errstr);
+				if (errstr) {
+					fprintf (stderr,
+							"%s is not a vaild disk\n",
+							argv[i]);
+				} else {
+					print_disk(mntbuf, mntsize, dn);
+				}
+			} else {
+				fprintf (stderr, "%s is not a disk!\n", argv[i]);
+			}
 		}
-		struct size_unit su = convert_size(DL_GETDSIZE (&dl));
-		printf ("%s\t\t%.1f%c\n", dname, su.size, su.unit);
-		for (unsigned char i = 0; i < dl.d_npartitions; ++i) {
-			print_partition(&dl, i, mntbuf, mntsize, dname);
+	} else {
+		for (int i = 0; i <= 9; i++) {
+			print_disk(mntbuf, mntsize, i);
 		}
-		free (dname);
 	}
 }

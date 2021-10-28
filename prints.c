@@ -42,3 +42,20 @@ void print_partition(struct disklabel *dp, unsigned char i, struct statfs *mntbu
 	}
 }
 
+void print_disk(struct statfs *mntbuf, size_t mntsize, uint8_t diskn) {
+		struct disklabel dl;
+		char *dname;
+		int ret = get_disk_info (diskn, &dl, &dname);
+		if (ret == -1) {
+			return;
+		} else if (ret == -2) {
+			fprintf(stderr, "Something went worng\n");
+			return;
+		}
+		struct size_unit su = convert_size(DL_GETDSIZE (&dl));
+		printf ("%s\t\t%.1f%c\n", dname, su.size, su.unit);
+		for (unsigned char i = 0; i < dl.d_npartitions; ++i) {
+			print_partition(&dl, i, mntbuf, mntsize, dname);
+		}
+		free (dname);
+}
