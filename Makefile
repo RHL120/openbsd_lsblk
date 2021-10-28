@@ -8,7 +8,7 @@ prints:
 	cc -c prints.c prints.h
 clean:
 	rm *.o *.gch lsblk
-install:
-	cp ./lsblk /usr/sbin/lsblk
-sinstall:
-	echo "installing with setuid. I wouldn't trust it"; cp ./lsblk /usr/sbin/lsblk
+install: all
+	cp ./lsblk /usr/bin/lsblk
+sinstall: all
+	echo "installing with setuid. I wouldn't trust it"; cp ./lsblk /usr/sbin/lsblk && chmod +s /usr/sbin/lsblk
