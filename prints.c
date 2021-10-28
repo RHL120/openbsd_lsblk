@@ -22,15 +22,14 @@ struct size_unit convert_size (size_t size) {
 	return su;
 }
 
-
-void print_partition(struct disklabel *dp, unsigned char i, struct statfs *mntbuf, long mntsize, char *dname) {
+void print_partition(const struct disklabel *dp, unsigned char i, const struct statfs *mntbuf, long mntsize, const struct swapent *swapbuf, int swapsize, char *dname) {
 	unsigned char part_letter = 'a' + i;
 	unsigned long size = DL_GETPSIZE(&dp->d_partitions[i]);
 	if (size && part_letter != 'c') {
 		char dp[11];
 		snprintf(dp, 10, "/dev/%s%c", dname, part_letter);
 		struct size_unit su = convert_size(size);
-		char *mntp = get_mount_point(dp, mntbuf, mntsize);
+		const char *mntp = get_mount_point(dp, mntbuf, mntsize, swapbuf, swapsize);
 		if (!mntp) {
 			printf ("|-%s%c\t\t%.1f%c\t\tpart\n", dname, part_letter,
 					su.size, su.unit);
@@ -41,7 +40,7 @@ void print_partition(struct disklabel *dp, unsigned char i, struct statfs *mntbu
 	}
 }
 
-void print_disk(struct statfs *mntbuf, size_t mntsize, uint8_t diskn) {
+void print_disk(const struct statfs *mntbuf, size_t mntsize, const struct swapent *swapbuf, int swapsize, uint8_t diskn) {
 		struct disklabel dl;
 		char *dname;
 		int ret = get_disk_info (diskn, &dl, &dname);
@@ -54,7 +53,7 @@ void print_disk(struct statfs *mntbuf, size_t mntsize, uint8_t diskn) {
 		struct size_unit su = convert_size(DL_GETDSIZE (&dl));
 		printf ("%s\t\t%.1f%c\t\tdisk\n", dname, su.size, su.unit);
 		for (unsigned char i = 0; i < dl.d_npartitions; ++i) {
-			print_partition(&dl, i, mntbuf, mntsize, dname);
+			print_partition(&dl, i, mntbuf, mntsize, swapbuf, swapsize, dname);
 		}
 		free (dname);
 }
