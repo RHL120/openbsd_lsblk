@@ -9,7 +9,6 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "Permssion denied\n");
 		return -1;
 	}
-	puts(table_head);
 	long mntsize;
 	//the reason why we have to define mntbuf and swapbuff here is because
 	//I think calling these functions is too slow to do every time we loop
@@ -21,12 +20,13 @@ int main(int argc, char *argv[]) {
 		fprintf (stderr, "Something went wrong\n");
 		return -2;
 	}
+	puts(table_head);
 	if (argc >= 2) {
 		for (int i = 1; i < argc; ++i) {
 			if (strlen (argv[i]) == 3 && !strncmp(argv[i], "sd", 2)) {
 				const char *errstr;
 				//Is it safe to do this conversion?
-				u_int8_t dn = strtonum(argv[i]+2, 0, 9, &errstr);
+				u_int8_t dn = strtonum(argv[i] + 2, 0, 9, &errstr);
 				if (errstr) {
 					fprintf (stderr,
 							"%s is not a vaild disk\n",
