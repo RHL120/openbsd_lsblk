@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 	}
 	if (argc >= 2) {
 		for (int i = 1; i < argc; ++i) {
-			if (!strncmp(argv[i], "sd", 2)) {
+			if (strlen (argv[i]) == 3 && !strncmp(argv[i], "sd", 2)) {
 				const char *errstr;
 				//Is it safe to do this conversion?
 				u_int8_t dn = strtonum(argv[i]+2, 0, 9, &errstr);
