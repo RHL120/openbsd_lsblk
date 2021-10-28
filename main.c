@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 	int swapsize = get_swap(&swapbuff);
 	if (swapsize < 0) {
 		fprintf (stderr, "Something went wrong\n");
+		return -2;
 	}
 	if (argc >= 2) {
 		for (int i = 1; i < argc; ++i) {
