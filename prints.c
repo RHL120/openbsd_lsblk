@@ -32,7 +32,8 @@ void print_partition(const struct disklabel *dp, unsigned char i, const struct s
 		char dp[11];
 		snprintf(dp, 10, "/dev/%s%c", dname, part_letter);
 		struct size_unit su = convert_size(size);
-		const char *mntp = get_mount_point(dp, mntbuf, mntsize, swapbuf, swapsize);
+		const char *mntp = get_mount_point(dp, mntbuf, mntsize, swapbuf,
+				swapsize);
 		if (!mntp) {
 			printf ("|-%s%c\t\t%.1f%c\t\tpart\n", dname, part_letter,
 					su.size, su.unit);
@@ -56,7 +57,8 @@ void print_disk(const struct statfs *mntbuf, size_t mntsize, const struct swapen
 		struct size_unit su = convert_size(DL_GETDSIZE (&dl));
 		printf ("%s\t\t%.1f%c\t\tdisk\n", dname, su.size, su.unit);
 		for (unsigned char i = 0; i < dl.d_npartitions; ++i) {
-			print_partition(&dl, i, mntbuf, mntsize, swapbuf, swapsize, dname);
+			print_partition(&dl, i, mntbuf, mntsize, swapbuf,
+					swapsize, dname);
 		}
 		free (dname);
 }
