@@ -3,12 +3,16 @@
 #include <stdlib.h>
 #include "disk.h"
 
-extern const char *table_head;
-
 struct size_unit {
 	double size;
 	char unit;
 };
+
+extern const char *table_head;
+extern const char *err_diskname;
+extern const char *err_perm;
+//Use this for when you are too lazy to handle the error precisely
+extern const char *err_lazy;
 
 //It's ok here to not return a pointer because sizeof(struct size_unit) is small
 //convert a size to it's best looking unit

@@ -2,6 +2,9 @@
 #include "prints.h"
 #include "disk.h"
 const char *table_head = "NAME\t\tSIZE\t\tTYPE\t\tMOUNTPOINT";
+const char *err_diskname = "%s is not a vaild disk name!\n";
+const char *err_perm = "Permssion denied\n";
+const char *err_lazy = "Something went wrong\n";
 
 /*It's ok here to not return a pointer because sizeof(struct size_unit) is small */
 struct size_unit convert_size (size_t size) {
@@ -47,7 +50,7 @@ void print_disk(const struct statfs *mntbuf, size_t mntsize, const struct swapen
 		if (ret == -1) {
 			return;
 		} else if (ret == -2) {
-			fprintf(stderr, "Something went worng\n");
+			fputs(err_lazy, stderr);
 			return;
 		}
 		struct size_unit su = convert_size(DL_GETDSIZE (&dl));

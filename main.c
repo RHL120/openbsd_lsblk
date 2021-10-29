@@ -8,7 +8,7 @@
 //no one cares about
 int main(int argc, char *argv[]) {
 	if (geteuid()) {
-		fprintf(stderr, "Permssion denied\n");
+		fputs (err_perm, stderr);
 		return -1;
 	}
 	long mntsize;
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 	struct swapent *swapbuff;
 	int swapsize = get_swap(&swapbuff);
 	if (swapsize < 0) {
-		fprintf (stderr, "Something went wrong\n");
+		fputs(err_lazy, stderr);
 		return -2;
 	}
 	puts(table_head);
@@ -30,14 +30,12 @@ int main(int argc, char *argv[]) {
 				//Is it safe to do this conversion?
 				u_int8_t dn = strtonum(argv[i] + 2, 0, 9, &errstr);
 				if (errstr) {
-					fprintf (stderr,
-							"%s is not a vaild disk\n",
-							argv[i]);
+					fprintf (stderr, err_diskname, argv[i]);
 				} else {
 					print_disk(mntbuf, mntsize,swapbuff, swapsize, dn);
 				}
 			} else {
-				fprintf (stderr, "%s is not a disk!\n", argv[i]);
+				fprintf (stderr, err_diskname, argv[i]);
 			}
 		}
 	} else {
