@@ -1,5 +1,5 @@
 # openbsd_lsblk
-Many ex-linux users (new OpenBSD users) compalin about the lack of an lsblk like command (even though diskname + swapctl + df can do what lsblk does) I happen to
+Many ex-linux users (new OpenBSD users) complain about the lack of an lsblk like command (even though diskname + swapctl + df can do what lsblk does) I happen to
 like lsblk so I decided to write a version of it for OpenBSD.
 
 ## Diffrences from linux's lsblk
