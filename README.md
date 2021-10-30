@@ -6,6 +6,8 @@ like lsblk so I decided to write a version of it for OpenBSD.
 1) It doesn't list major and minor numbers (because I never really used them)
 2) It needs su or setuid (becuase disklabel is the only lib I found and it needs su)
 3) It uses ascii chars only
+4) It doesn't take any flags. It's only (optional) arg is a diskname (ex: sd0)
+5) It doesn't list CDs
 ##Installation
 ```bash
 git clone https://github.com/RHL120/openbsd_lsblk.git
