@@ -11,7 +11,7 @@ like lsblk so I decided to write a version of it for OpenBSD.
 ## Installation
 ```bash
 git clone https://github.com/RHL120/openbsd_lsblk.git
-cd openbsd_lsblkCancel changes
+cd openbsd_lsblk
 make
 doas make install #You can do make sinstall to put it in /usr/local/sbin and to set suid but I don't recommend it because it may have bugs
 make clean
