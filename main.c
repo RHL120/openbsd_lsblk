@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	} else {
-		for (int i = 0; i <= 9; i++) {
+		for (uint8_t i = 0; i <= 9; i++) {
 			print_disk(mntbuf, mntsize, swapbuff, swapsize,  i);
 		}
 	}

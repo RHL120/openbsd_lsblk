@@ -25,9 +25,9 @@ struct size_unit convert_size (size_t size) {
 	return su;
 }
 
-void print_partition(const struct disklabel *dp, unsigned char i, const struct statfs *mntbuf, long mntsize, const struct swapent *swapbuf, int swapsize, char *dname) {
-	unsigned char part_letter = 'a' + i;
-	unsigned long size = DL_GETPSIZE(&dp->d_partitions[i]);
+void print_partition(const struct disklabel *dp, unsigned char pn, const struct statfs *mntbuf, long mntsize, const struct swapent *swapbuf, int swapsize, char *dname) {
+	unsigned char part_letter = 'a' + pn;
+	unsigned long size = DL_GETPSIZE(&dp->d_partitions[pn]);
 	if (size && part_letter != 'c') {
 		char dp[11];
 		snprintf(dp, 10, "/dev/%s%c", dname, part_letter);
