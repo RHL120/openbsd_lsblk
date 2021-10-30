@@ -8,7 +8,7 @@ like lsblk so I decided to write a version of it for OpenBSD.
 3) It uses ascii chars only
 4) It doesn't take any flags. It's only (optional) arg is a diskname (ex: sd0)
 5) It doesn't list CDs
-##Installation
+## Installation
 ```bash
 git clone https://github.com/RHL120/openbsd_lsblk.git
 cd openbsd_lsblkCancel changes
